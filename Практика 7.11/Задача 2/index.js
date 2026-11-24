@@ -1,21 +1,22 @@
 const heights = [164, 157, 160, 143, 170];
 
-const list = document.getElementById("list");
-const addButton = document.getElementById("add-button");
-const filterButton = document.getElementById("filter-button");
+const list = document.querySelector(".list");
+const addButton = document.querySelector(".add-button");
+const filterButton = document.querySelector(".filter-button");
 
 function parseNumber(text) {
-    return Number(text.trim().replace(",", "."));
+    return +text.trim().replace(",", ".");
+}
+
+function addHeightToList(height) {
+    const item = document.createElement("li");
+    item.textContent = height;
+    list.appendChild(item);
 }
 
 function renderHeights(items) {
     list.innerHTML = "";
-
-    items.forEach((height) => {
-        const item = document.createElement("li");
-        item.textContent = height;
-        list.appendChild(item);
-    });
+    items.forEach(addHeightToList);
 }
 
 addButton.addEventListener("click", () => {
@@ -30,13 +31,13 @@ addButton.addEventListener("click", () => {
 
     const height = parseNumber(value);
 
-    if (Number.isNaN(height)) {
+    if (isNaN(height)) {
         alert("Рост должен быть числом!");
         return;
     }
 
     heights.push(height);
-    renderHeights(heights);
+    addHeightToList(height);
 });
 
 filterButton.addEventListener("click", () => {
@@ -51,7 +52,7 @@ filterButton.addEventListener("click", () => {
 
     const minHeight = parseNumber(value);
 
-    if (Number.isNaN(minHeight)) {
+    if (isNaN(minHeight)) {
         alert("Минимальный рост должен быть числом!");
         return;
     }
@@ -59,4 +60,4 @@ filterButton.addEventListener("click", () => {
     renderHeights(heights.filter((height) => height >= minHeight));
 });
 
-renderHeights(heights);
+heights.forEach(addHeightToList);

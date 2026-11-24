@@ -7,21 +7,14 @@ const books = [
     "Отцы и дети",
 ];
 
-const list = document.getElementById("list");
-const addButton = document.getElementById("add-button");
-const searchButton = document.getElementById("search-button");
+const list = document.querySelector(".list");
+const addButton = document.querySelector(".add-button");
+const searchButton = document.querySelector(".search-button");
 
-function renderBooks(foundIndexes = []) {
-    list.innerHTML = "";
-
-    books.forEach((book, index) => {
-        const item = document.createElement("li");
-        item.textContent = book;
-
-        if (foundIndexes.includes(index)) {item.classList.add("found");}
-
-        list.appendChild(item);
-    });
+function addBookToList(book) {
+    const item = document.createElement("li");
+    item.textContent = book;
+    list.appendChild(item);
 }
 
 addButton.addEventListener("click", () => {
@@ -35,7 +28,7 @@ addButton.addEventListener("click", () => {
     }
 
     books.push(title.trim());
-    renderBooks();
+    addBookToList(title.trim());
 });
 
 searchButton.addEventListener("click", () => {
@@ -44,19 +37,21 @@ searchButton.addEventListener("click", () => {
     if (query === null) {return;}
 
     const searchText = query.trim().toLowerCase();
-    const foundIndexes = [];
+    const items = [...document.querySelectorAll(".list li")];
 
-    books.forEach((book, index) => {
-        if (searchText && book.toLowerCase().includes(searchText)) {foundIndexes.push(index);}
+    const results = items.map((item) => {
+        const isFound =
+            searchText !== "" &&
+            item.textContent.toLowerCase().includes(searchText);
+
+        item.classList.toggle("found", isFound);
+
+        return isFound;
     });
 
-    if (foundIndexes.length === 0) {
+    if (!results.includes(true)) {
         alert("Книга не найдена!");
-        renderBooks();
-        return;
     }
-
-    renderBooks(foundIndexes);
 });
 
-renderBooks();
+books.forEach(addBookToList);
