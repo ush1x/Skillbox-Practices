@@ -1,0 +1,28 @@
+.interests {
+    margin: 0 0 16px;
+    padding: 0;
+    border: none;
+}
+
+.interests legend {
+    padding: 0;
+    margin-bottom: 4px;
+}
+
+.error {
+    margin-left: 8px;
+    color: #c0392b;
+    font-size: 14px;
+}
+
+.result {
+    margin-top: 30px;
+}
+
+.result h2 {
+    margin-bottom: 10px;
+}
+
+.result p {
+    margin: 6px 0;
+}

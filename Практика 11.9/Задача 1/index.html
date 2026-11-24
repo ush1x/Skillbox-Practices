@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Форма опроса</title>
+</head>
+<body>
+    <h1>Форма опроса</h1>
+
+    <form class="survey-form" novalidate>
+        <p>
+            <label>
+                Имя пользователя:
+                <input type="text" class="name-input" placeholder="Name">
+            </label>
+            <span class="error name-error"></span>
+        </p>
+
+        <p>
+            <label>
+                Email:
+                <input type="email" class="email-input" placeholder="mail@mail.ru">
+            </label>
+            <span class="error email-error"></span>
+        </p>
+
+        <p>
+            Пол:
+            <label>
+                <input type="radio" name="gender" class="gender-input" value="Мужской" checked>
+                Мужской
+            </label>
+            <label>
+                <input type="radio" name="gender" class="gender-input" value="Женский">
+                Женский
+            </label>
+        </p>
+
+        <p>
+            <label>
+                Оценка сервиса:
+                <input type="range" class="rating-input" min="1" max="10" value="5">
+            </label>
+        </p>
+
+        <fieldset class="interests">
+            <legend>Интересы пользователя:</legend>
+            <label><input type="checkbox" class="interest-input" value="Спорт"> Спорт</label><br>
+            <label><input type="checkbox" class="interest-input" value="Музыка"> Музыка</label><br>
+            <label><input type="checkbox" class="interest-input" value="Путешествия"> Путешествия</label><br>
+            <label><input type="checkbox" class="interest-input" value="Кино"> Кино</label>
+        </fieldset>
+
+        <p>
+            <label>
+                Дополнительные комментарии:<br>
+                <textarea class="comments-input" rows="4" cols="35"></textarea>
+            </label>
+        </p>
+
+        <button type="submit" class="submit-button">Отправить</button>
+    </form>
+
+    <div class="result"></div>
+
+    <script src="index.js"></script>
+</body>
+</html>

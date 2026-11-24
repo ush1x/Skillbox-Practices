@@ -1,0 +1,27 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+.product-form {
+    margin-bottom: 20px;
+}
+
+.error {
+    margin-left: 8px;
+    color: #c0392b;
+    font-size: 14px;
+}
