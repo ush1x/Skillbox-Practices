@@ -13,7 +13,7 @@
         <p>
             <label>
                 Имя пользователя:
-                <input type="text" class="name-input" placeholder="Name">
+                <input type="text" name="name" class="name-input" placeholder="Name">
             </label>
             <span class="error name-error"></span>
         </p>
@@ -21,7 +21,7 @@
         <p>
             <label>
                 Email:
-                <input type="email" class="email-input" placeholder="mail@mail.ru">
+                <input type="email" name="email" class="email-input" placeholder="mail@mail.ru">
             </label>
             <span class="error email-error"></span>
         </p>
@@ -41,22 +41,22 @@
         <p>
             <label>
                 Оценка сервиса:
-                <input type="range" class="rating-input" min="1" max="10" value="5">
+                <input type="range" name="rating" class="rating-input" min="1" max="10" value="5">
             </label>
         </p>
 
         <fieldset class="interests">
             <legend>Интересы пользователя:</legend>
-            <label><input type="checkbox" class="interest-input" value="Спорт"> Спорт</label><br>
-            <label><input type="checkbox" class="interest-input" value="Музыка"> Музыка</label><br>
-            <label><input type="checkbox" class="interest-input" value="Путешествия"> Путешествия</label><br>
-            <label><input type="checkbox" class="interest-input" value="Кино"> Кино</label>
+            <label><input type="checkbox" name="interests" class="interest-input" value="Спорт"> Спорт</label><br>
+            <label><input type="checkbox" name="interests" class="interest-input" value="Музыка"> Музыка</label><br>
+            <label><input type="checkbox" name="interests" class="interest-input" value="Путешествия"> Путешествия</label><br>
+            <label><input type="checkbox" name="interests" class="interest-input" value="Кино"> Кино</label>
         </fieldset>
 
         <p>
             <label>
                 Дополнительные комментарии:<br>
-                <textarea class="comments-input" rows="4" cols="35"></textarea>
+                <textarea name="comments" class="comments-input" rows="4" cols="35"></textarea>
             </label>
         </p>
 

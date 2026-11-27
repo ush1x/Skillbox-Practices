@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <g stroke="#1b2f5c" stroke-width="5" stroke-linejoin="round">
+    <path d="M100 18 L119 30 L141 26 L150 47 L171 56 L167 79 L182 100 L167 121 L171 144 L150 153 L141 174 L119 170 L100 182 L81 170 L59 174 L50 153 L29 144 L33 121 L18 100 L33 79 L29 56 L50 47 L59 26 L81 30Z" fill="#f08a4b"/>
+  </g>
+  <text x="100" y="120" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="bold" fill="#fff" stroke="#1b2f5c" stroke-width="2" text-anchor="middle">10%</text>
+</svg>

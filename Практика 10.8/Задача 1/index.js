@@ -1,13 +1,16 @@
-const thumbnails = document.querySelectorAll(".thumbnail");
+const thumbnails = document.querySelector(".thumbnails");
 const preview = document.querySelector(".preview");
 
-thumbnails.forEach((thumbnail) => {
-    thumbnail.addEventListener("click", () => {
-        const url = thumbnail.getAttribute("src");
-        const image = document.createElement("img");
-        image.src = url;
-        image.alt = thumbnail.alt;
+thumbnails.addEventListener("click", (event) => {
+    const thumbnail = event.target.closest(".thumbnail");
 
-        preview.replaceChildren(image);
-    });
+    if (!thumbnail) {return;}
+
+    const url = thumbnail.getAttribute("src");
+
+    const image = document.createElement("img");
+    image.src = url;
+    image.alt = thumbnail.alt;
+
+    preview.replaceChildren(image);
 });

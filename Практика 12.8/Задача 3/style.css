@@ -1,0 +1,86 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #cdd5df;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.promo-form {
+    width: min(600px, 92vw);
+    padding: 28px;
+    border-radius: 14px;
+    background-color: #fff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.promo-row {
+    display: flex;
+    gap: 14px;
+}
+
+.promo-input {
+    flex: 1;
+    min-width: 0;
+    padding: 18px 26px;
+    border: 1px solid #8a8a8a;
+    border-radius: 14px;
+    outline: none;
+    font-family: inherit;
+    font-size: 26px;
+    text-transform: uppercase;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.promo-input::placeholder {
+    color: #777;
+}
+
+.promo-input:focus {
+    border-color: #5ca0ff;
+}
+
+.promo-button {
+    padding: 18px 28px;
+    border: none;
+    border-radius: 14px;
+    background-color: #5ca0ff;
+    color: #000;
+    font-family: inherit;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.promo-button:hover {
+    background-color: #4a8fee;
+}
+
+.promo-message {
+    margin: 14px 0 0;
+    color: #0a7d0a;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.promo-message:empty {
+    display: none;
+}
+
+.promo-form--success .promo-input {
+    border-color: #4caf50;
+    color: #0a7d0a;
+}
+
+@media (max-width: 520px) {
+    .promo-row {
+        flex-direction: column;
+    }
+}

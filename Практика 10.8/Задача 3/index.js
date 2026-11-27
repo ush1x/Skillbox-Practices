@@ -15,7 +15,7 @@ function renderPrices() {
 }
 
 function sortAscending() {
-    prices.sort((a, b) => a - b);
+    prices.sort();
 }
 
 function sortDescending() {

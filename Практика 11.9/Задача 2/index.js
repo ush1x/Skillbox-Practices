@@ -1,40 +1,64 @@
 const form = document.querySelector(".product-form");
-const nameInput = document.querySelector(".name-input");
-const weightInput = document.querySelector(".weight-input");
-const distanceInput = document.querySelector(".distance-input");
-const nameError = document.querySelector(".name-error");
-const weightError = document.querySelector(".weight-error");
-const distanceError = document.querySelector(".distance-error");
 const tableBody = document.querySelector(".product-table tbody");
 
 const NAME_PATTERN = /[A-Za-zА-Яа-яЁё]/;
 
-function getValidData() {
-    const name = nameInput.value.trim();
-    const weight = +weightInput.value;
-    const distance = +distanceInput.value;
+const checkersDict = {
+    required: {
+        test: (value) => value.trim().length > 0,
+        message: "Обязательное поле для заполнения",
+    },
+    productName: {
+        test: (value) => NAME_PATTERN.test(value) && value.trim().length <= 50,
+        message: "Название должно содержать буквы и быть не длиннее 50 символов",
+    },
+    positive: {
+        test: (value) => +value > 0,
+        message: "Введите положительное число",
+    },
+};
 
-    const isNameValid = NAME_PATTERN.test(name) && name.length <= 50;
-    const isWeightValid = weight > 0;
-    const isDistanceValid = distance > 0;
+const validators = [
+    {
+        field: "name",
+        error: document.querySelector(".name-error"),
+        checkers: ["required", "productName"],
+    },
+    {
+        field: "weight",
+        error: document.querySelector(".weight-error"),
+        checkers: ["required", "positive"],
+    },
+    {
+        field: "distance",
+        error: document.querySelector(".distance-error"),
+        checkers: ["required", "positive"],
+    },
+];
 
-    nameError.textContent = isNameValid
-        ? ""
-        : "Введите название товара (буквы, не более 50 символов)";
-    weightError.textContent = isWeightValid
-        ? ""
-        : "Вес должен быть положительным числом";
-    distanceError.textContent = isDistanceValid
-        ? ""
-        : "Расстояние должно быть положительным числом";
+function validateForm(formData) {
+    return validators
+        .map(({ field, error, checkers }) => {
+            const value = formData.get(field);
+            const failedChecker = checkers.find(
+                (checker) => !checkersDict[checker].test(value)
+            );
 
-    if (!isNameValid || !isWeightValid || !isDistanceValid) { return null; }
+            error.textContent = failedChecker
+                ? checkersDict[failedChecker].message
+                : "";
 
-    return { name, weight, distance };
+            return !failedChecker;
+        })
+        .every(Boolean);
 }
 
-function addProductToTable({ name, weight, distance }) {
+function addProductToTable(formData) {
+    const name = formData.get("name").trim();
+    const weight = +formData.get("weight");
+    const distance = +formData.get("distance");
     const cost = (weight * distance) / 10;
+
     const row = document.createElement("tr");
 
     [name, weight, distance, `${cost.toFixed(2)} руб.`].forEach((value) => {
@@ -49,10 +73,12 @@ function addProductToTable({ name, weight, distance }) {
 form.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const data = getValidData();
+    const formData = new FormData(form);
 
-    if (!data) { return; }
+    if (!validateForm(formData)) {
+        return;
+    }
 
-    addProductToTable(data);
+    addProductToTable(formData);
     form.reset();
 });

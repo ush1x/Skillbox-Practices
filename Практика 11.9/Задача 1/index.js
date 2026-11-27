@@ -1,49 +1,63 @@
 const form = document.querySelector(".survey-form");
-const nameInput = document.querySelector(".name-input");
-const nameError = document.querySelector(".name-error");
-const emailInput = document.querySelector(".email-input");
-const emailError = document.querySelector(".email-error");
-const ratingInput = document.querySelector(".rating-input");
-const commentsInput = document.querySelector(".comments-input");
 const result = document.querySelector(".result");
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function validateName() {
-    const isValid = nameInput.value.trim() !== "";
+const checkersDict = {
+    required: {
+        test: (value) => value.trim().length > 0,
+        message: "Обязательное поле для заполнения",
+    },
+    email: {
+        test: (value) => EMAIL_PATTERN.test(value.trim()),
+        message: "Введите email в формате name@mail.ru",
+    },
+};
 
-    nameError.textContent = isValid ? "" : "Введите имя пользователя";
+const validators = [
+    {
+        field: "name",
+        error: document.querySelector(".name-error"),
+        checkers: ["required"],
+    },
+    {
+        field: "email",
+        error: document.querySelector(".email-error"),
+        checkers: ["required", "email"],
+    },
+];
 
-    return isValid;
+function validateForm(formData) {
+    return validators
+        .map(({ field, error, checkers }) => {
+            const value = formData.get(field);
+            const failedChecker = checkers.find(
+                (checker) => !checkersDict[checker].test(value)
+            );
+
+            error.textContent = failedChecker
+                ? checkersDict[failedChecker].message
+                : "";
+
+            return !failedChecker;
+        })
+        .every(Boolean);
 }
 
-function validateEmail() {
-    const value = emailInput.value.trim();
-    let message = "";
-
-    if (value === "") {message = "Введите email";}
-    else if (!EMAIL_PATTERN.test(value)) {message = "Введите email в формате name@mail.ru";}
-
-    emailError.textContent = message;
-
-    return message === "";
-}
-
-nameInput.addEventListener("input", validateName);
-emailInput.addEventListener("input", validateEmail);
-
-function showResult(data) {
-    const title = document.createElement("h2");
-    title.textContent = "Данные пользователя";
+function showResult(formData) {
+    const interests = formData.getAll("interests");
 
     const lines = [
-        ["Имя", data.name],
-        ["Email", data.email],
-        ["Пол", data.gender],
-        ["Оценка сервиса", data.rating],
-        ["Интересы", data.interests.length ? data.interests.join(", ") : "не выбраны"],
-        ["Комментарии", data.comments || "нет"],
+        ["Имя", formData.get("name").trim()],
+        ["Email", formData.get("email").trim()],
+        ["Пол", formData.get("gender")],
+        ["Оценка сервиса", formData.get("rating")],
+        ["Интересы", interests.length ? interests.join(", ") : "не выбраны"],
+        ["Комментарии", formData.get("comments").trim() || "нет"],
     ];
+
+    const title = document.createElement("h2");
+    title.textContent = "Данные пользователя";
 
     const paragraphs = lines.map(([label, value]) => {
         const paragraph = document.createElement("p");
@@ -57,25 +71,12 @@ function showResult(data) {
 form.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const isNameValid = validateName();
-    const isEmailValid = validateEmail();
+    const formData = new FormData(form);
 
-    if (!isNameValid || !isEmailValid) {
+    if (!validateForm(formData)) {
         result.replaceChildren();
         return;
     }
 
-    const gender = document.querySelector(".gender-input:checked").value;
-    const interests = [...document.querySelectorAll(".interest-input:checked")].map(
-        (interest) => interest.value
-    );
-
-    showResult({
-        name: nameInput.value.trim(),
-        email: emailInput.value.trim(),
-        gender,
-        rating: ratingInput.value,
-        interests,
-        comments: commentsInput.value.trim(),
-    });
+    showResult(formData);
 });
